@@ -1,0 +1,14 @@
+
+{{- $inner := . -}}
+
+{{- if or (eq $inner "") (eq $inner nil) -}}
+    {{- $inner = "" -}}
+{{- end -}}
+
+<section class="intro">
+    <div class="container small">
+        {{- if $inner -}}
+            {{- markdownify $inner -}}
+        {{- end -}}
+    </div>
+</section>

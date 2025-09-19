@@ -1,0 +1,51 @@
+{{- $inner := .Inner -}}
+{{- if or (eq $inner "") (eq $inner nil) -}}
+    {{- $inner = "Empty shortcode found." -}}
+{{- end -}}
+{{- $tabs := split $inner  "---" -}}
+<ul class="tabs-hp">
+  {{- range $tabs -}}
+    {{- $title := index (findRE `(?s)<h2.*?>.*?</h2>` (markdownify .) 1) 0 -}}
+    {{- $id := index (split (index (findRE `(?s)id=".*?"` $title 1) 0) `"`) 1 -}}
+    {{- $titleplain := replace (index (split $title ">") 1) `</h2` `` -}}
+    <li><a href="#tab_{{- $id -}}" onclick="toggleTabHP(this); return false;">{{ $titleplain }}</a></li>
+  {{- end -}}
+</ul>
+<div class="tabs_container-hp">
+  {{- range $tabs -}}
+    {{- $title := index (findRE `(?s)<h2.*?>.*?</h2>` (markdownify .) 1) 0 -}}
+    {{- $id := index (split (index (findRE `(?s)id=".*?"` $title 1) 0) `"`) 1 -}}
+    <div class="tab-hp" id="tab_{{- $id -}}">
+      {{- markdownify . | safeHTML -}}
+    </div>
+  {{- end -}}
+</div>
+<script>
+  function toggleTabHP(el) {
+    var ul = el.parentElement.parentElement;
+    var lis = ul.querySelectorAll('li');
+    lis.forEach(function(li) {
+      li.classList.remove('selected');
+    });
+    var container = ul.nextElementSibling;
+    var tabs = container.querySelectorAll('.tab-hp');
+    tabs.forEach(function(tab) {
+      tab.style.display = 'none';
+    });
+    el.parentElement.classList.add('selected');
+    var target = el.getAttribute('href');
+    var sel = container.querySelector(target);
+    if (sel) {
+      sel.style.display = '';
+    }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    var uls = document.querySelectorAll('.tabs-hp');
+    uls.forEach(function(ul) {
+      var firsta = ul.querySelector('li:first-child a');
+      if (firsta) {
+        firsta.click();
+      }
+    });
+  });
+</script>

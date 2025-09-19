@@ -1,0 +1,43 @@
+{{- $lang := .Language.Lang -}}
+{{- $data := (index .Site.Data $lang) -}}
+
+{{- $logo := $data.header.logo_image -}}
+{{- $logoWhite := $data.header.logo_image_white -}}
+
+{{- if .Params.site_logo_image -}}{{- $logo = .Params.site_logo_image -}}{{- end -}}
+
+{{- $useDark := false -}}
+{{- if or (.Params.dark_header) (and (ne .Params.dark_header false) .Site.Data.settings.dark_header) -}}
+  {{- $useDark = true -}}
+{{- end -}}
+
+{{- if and $useDark $logoWhite -}}
+  {{- $logo = $logoWhite -}}
+{{- end -}}
+
+{{- $favicon := .Site.Data.settings.favicon_image -}}
+{{- if .Params.site_favicon_image -}}{{- $favicon = .Params.site_favicon_image -}}{{- end -}}
+
+{{- $title := $data.general.title -}}
+{{- if .Params.site_title -}}{{- $title = .Params.site_title -}}{{- end -}}
+
+{{- $subtitle := $data.header.logo_subtitle -}}
+{{- if .Params.site_logo_subtitle -}}{{- $subtitle = .Params.site_logo_subtitle -}}{{- end -}}
+
+<a href="{{ relLangURL `/` }}#top" class="logo" style="display: flex; align-items: center;">
+  {{ if $logo }}
+    <img src="{{ $logo | relURL }}" alt="{{ $title }} logo" style="height: 50px; margin-right: 10px;" />
+    <div class="logo-text">
+      <span style="font-weight: bold;">{{ $title }}</span><br/>
+      {{ if $subtitle }}<span style="font-size: 0.5em;">{{ $subtitle }}</span>{{ end }}
+    </div>
+  {{ else }}
+    <div class="{{ if $subtitle }}has_subtitle{{ end }}">
+      <img src="{{ $favicon | relURL }}" alt="{{ $title }} logo" class="inline black_2_textDark" />
+      <div>
+        <span>{{ $title }}</span>
+        {{ if $subtitle }}<span>{{ $subtitle }}</span>{{ end }}
+      </div>
+    </div>
+  {{ end }}
+</a>

@@ -1,0 +1,11 @@
+body:not(.mobilemenu) footer > *, 
+body:not(.mobilemenu) section > * {
+    opacity: 1; 
+    transition: none; /*transform 1s ease-in-out 5s, opacity 1s ease-in-out 0.5s; */
+    position: none;
+}
+body:not(.mobilemenu) section > * {transform: none;}
+body:not(.mobilemenu) section.stickstofooter.opaque > * {transform: none;}
+body:not(.mobilemenu) footer.opaque > *, 
+body:not(.mobilemenu) section.opaque > * {opacity: 1;}
+body:not(.mobilemenu) section.opaque > * {transform: none}

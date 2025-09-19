@@ -1,0 +1,11 @@
+logo_image: /img/Logo_CJSM_HD_white.svg
+logo_title: CJSM
+menuitems:
+socials:
+  - title: Twitter
+    link: https://twitter.com
+    logo_image: /icon/twitter.svg      
+  - title: LinkedIn
+    link: https://www.linkedin.com/company/cjsmsfsm/posts/?feedView=all
+    logo_image: /icon/linkedin.svg
+footer_text: This theme is open source. More info on [Github](https://github.com/jhvanderschee/hugobricks)!

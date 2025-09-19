@@ -1,0 +1,72 @@
+- name: Gauthier ROSÉ
+  function: Président
+  image: /trombi/Gauthier.jpg
+  description: Institut Parisien de Chimie Moléculaire, IPCM (Paris)
+  email: gauthier.rose@mnhn.fr
+  phone:
+  linkedin: 
+  website:
+- name: Nathan TRAULLÉ
+  function: Vice-Président
+  image: /trombi/Nathan.png
+  description: FLCP-A2MC (Metz)
+  email: nathan.traulle@univ-lorraine.fr
+  phone:
+  linkedin: 
+  website:
+- name: Alexia FATAKA
+  function: Secrétaire
+  image: /trombi/Alexia.png
+  description: CEA Saclay
+  email: alexiafataka@gmail.com>
+  phone:
+  linkedin: 
+  website:
+- name: Clarisse GOSSET-ERARD
+  function: Trésorière
+  image: /trombi/Clarisse.jpg
+  description: LAMBE, Evry
+  email: clarisse.gosset-erard@univ-evry.fr>
+  phone:
+  linkedin: 
+  website:
+- name: Isaure SERGENT
+  function: Responsable Communication
+  image: /trombi/Isaure.jpg
+  description: Institut de Chimie Radicalaire, Aix-Marseille University
+  email: isaure.sergent@univ-amu.fr
+  phone:
+  linkedin: 
+  website:
+- name: Marie VALMORI
+  function: Adjointe Webmaster
+  image: /trombi/VALMORIMarie.jpg
+  description: CEA SPI/LIMS, Université Paris-Saclay (Paris)
+  email: marie.valmori@cea.fr
+  phone:
+  linkedin:
+  website: 
+- name: Maxime SUEUR
+  function: Webmaster
+  image: /trombi/Maxime.jpg
+  description: TotalEnergies, Université de Rouen, CNRS
+  email: maxime.sueur1@univ-rouen.fr
+  phone:
+  linkedin:
+  website: 
+- name: Bayan ALMASRI
+  function: Responsable Relations Partenaires Industriels et Académiques
+  image: /trombi/Bayan.jpeg
+  description: Miniaturisation pour la Synthèse, l’Analyse et la Protéomique (MSAP), UAR CNRS 3290, Université de Lille
+  email: bayan.almasri1234@gmail.com
+  phone:
+  linkedin:
+  website: 
+- name: Alix MUNOZ
+  function: Adjointe Relations Partenaires Industriels et Académiques
+  image: /trombi/Alix.jpg
+  description: Laboratoire Central de la Préfecture de Police (LCPP), Spectrométrie de Masse Biologique et Protéomique (SMBP, ESPCI)
+  email: alix.munoz@espci.fr
+  phone:
+  linkedin:
+  website: 
