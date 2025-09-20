@@ -29,7 +29,7 @@ Le **CJSM** est un collectif de jeunes chercheur·es qui promeut les échanges, 
 ## Nos sponsors & Partenaires
 ---
 {{< /brick_title >}}
-{{< gallery dir="static/sponsors/gallery/" >}}
+{{< gallery dir="sponsors/gallery/" >}}
 
 
 
