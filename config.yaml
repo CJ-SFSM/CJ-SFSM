@@ -1,13 +1,14 @@
 baseURL: 
+theme: hugobricks
 defaultContentLanguage: en
-
 assetDir: static
+
+disableKinds:
+  - taxonomy
+  - term
 
 markup:
   goldmark:
-    parser:
-      autoHeadingID: true
-      autoHeadingIDType: github
     renderer:
       unsafe: true
     extensions:
@@ -27,6 +28,5 @@ languages:
     contentDir: content/en
     weight: 1
     disabled: false
-    permalinks:
 
 

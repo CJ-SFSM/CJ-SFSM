@@ -1,7 +1,7 @@
 ---
 title: Notre équipe
 ---
-{{< brick_team >}}
+{{< people >}}
 
 {{< breadcrumbs >}}
 
@@ -12,7 +12,7 @@ Le conseil d'administration (CA) du CJSM dispose de 9 membres dont chacun, dispo
 # Notre rôle
 
 Notre rôle consiste à organiser plusieurs évènements tout le long de l'année et durant tout le mandat.  A chaque renouvèlement du bureau, c'est-à-dire tous les ans, chaque membre du CA a la possibilité de changer de fonction, afin de découvrir les autres facettes de l'association. 
-{{< /brick_team >}}
+{{< /people >}}
 
 
 
