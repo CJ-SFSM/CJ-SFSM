@@ -4,39 +4,34 @@ logo_subtitle:
 dark_header: false
 mobile_view_width: 1100
 menuitems:
-  - title: Accueil
-    link: /
-  - title: Actualités
-    link: /blog/
-  - title: Bureau du CJSM
-    link: /bureau/
-    items: 
-      - title: Bureau 2025/2026
-        link: /bureau/
-      - title: Bureau des années précédentes
-        link: /old_bureau/
-  - title: le CJSM
-    link: /chiffres/
+  - title: "Accueil"
+    link: ""
+  - title: "Actualités"
+    link: "blog/"
+  - title: "Bureau du CJSM"
+    link: "bureau/"
     items:
-      - title: le CJSM en chiffres
-        link: /chiffres/
-      - title: Thèses soutenues
-        link: /theses/
-      - title: Adhésion
-        link: /adhesion/
-  - title: Nos actions
-    link: /actions/
-    items: 
-      - title: Webinaires
-        link: /webinaires/
-      - title: Mentorat
-        link: /mentorat/
-      - title: Ateliers
-        link: /ateliers/
-  - title: Emploi
-    link: /jobs/  
-cta:
-  active: true
-  title: Get started
-  link: /get-started/
-preheader:
+      - title: "Bureau 2025/2026"
+        link: "bureau/"
+      - title: "Bureau des années précédentes"
+        link: "old_bureau/"
+  - title: "le CJSM"
+    link: "chiffres/"
+    items:
+      - title: "le CJSM en chiffres"
+        link: "chiffres/"
+      - title: "Thèses soutenues"
+        link: "theses/"
+      - title: "Adhésion"
+        link: "adhesion/"
+  - title: "Nos actions"
+    link: "actions/"
+    items:
+      - title: "Webinaires"
+        link: "webinaires/"
+      - title: "Mentorat"
+        link: "mentorat/"
+      - title: "Ateliers"
+        link: "ateliers/"
+  - title: "Emploi"
+    link: "jobs/"
