@@ -5,25 +5,25 @@ dark_header: false
 mobile_view_width: 1100
 menuitems:
   - title: "Accueil"
-    link: "/_index"
+    link: "/"
   - title: "Actualités"
     link: "blog/"
   - title: "Bureau du CJSM"
     link: "bureau/"
     items:
       - title: "Bureau 2025/2026"
-        link: "/bureau/"
+        link: "/"
       - title: "Bureau des années précédentes"
         link: "/old_bureau/"
   - title: "le CJSM"
-    link: "chiffres/"
+    link: "/chiffres/"
     items:
       - title: "le CJSM en chiffres"
         link: "/chiffres/"
       - title: "Thèses soutenues"
-        link: "t/heses/"
+        link: "/theses/"
       - title: "Adhésion"
-        link: "a/dhesion/"
+        link: "/adhesion/"
   - title: "Nos actions"
     link: "/actions/"
     items:
