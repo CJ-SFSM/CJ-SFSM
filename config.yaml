@@ -1,4 +1,4 @@
-baseURL: baseURL = "https://cj-sfsm.github.io/CJ-SFSM/"
+baseURL: baseURL = "https://cj-sfsm.github.io"
 theme: hugobricks
 defaultContentLanguage: en
 assetDir: static
