@@ -17,11 +17,27 @@
         {{- $postimage := "" -}}
         {{- with $p.Params.image -}}
           {{- $img := . -}}
-          {{- with $p.Resources.GetMatch $img -}}
-            {{- $postimage = (.Fill `600x300 jpg Smart q50`).RelPermalink -}}
+          {{- if or (hasPrefix $img "http://") (hasPrefix $img "https://") -}}
+            {{- $postimage = $img -}}
           {{- else -}}
-            {{- $clean := strings.TrimPrefix "/" $img -}}
-            {{- $postimage = ($clean | relURL) -}}
+            {{- /* Autoriser "static/..." dans le front-matter : on l’enlève pour l’URL publique */ -}}
+            {{- $img = strings.TrimPrefix $img "static/" -}}
+
+            {{- /* Priorité au page-bundle : si l’image est à côté du .md, on utilise la pipeline */ -}}
+            {{- with $p.Resources.GetMatch $img -}}
+              {{- $postimage = (.Fill `600x300 jpg Smart q50`).RelPermalink -}}
+            {{- else -}}
+              {{- /* Sinon : image servie depuis /static → URL publique absolue */ -}}
+              {{- $clean := strings.TrimPrefix "/" $img -}}
+              {{- $postimage = (print "/" $clean) -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+
+        {{- /* Fallback configurable si aucune image */ -}}
+        {{- if not $postimage -}}
+          {{- with page.Site.Data.settings.default_post_image -}}
+            {{- $postimage = (. | relURL) -}}
           {{- end -}}
         {{- end -}}
 
