@@ -1,6 +1,7 @@
-- name: "/sponsors/LCH.jpg"
+- name: LCH
   url: "https://www.fnch.fr/national/le-laboratoire-des-courses-hippiques"
   niveau: "Prestige"
+  logo: LCH.jpg
 
 - name: "Bruker"
   url: "https://www.bruker.com/fr.html"

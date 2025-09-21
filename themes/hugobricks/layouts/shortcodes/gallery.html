@@ -16,20 +16,13 @@
             {{- $name := .name -}}
             {{- $url := .url -}}
             {{- $niveau := .niveau -}}
-
-            {{ $fichiers := readDir (print "static/" $dir) }}
-            {{ $fichier := "" }}
-
-            {{ range $fichiers }}
-              {{ if (in .Name $name) }}
-                {{ $fichier = .Name }}
-              {{ end }}
-            {{ end }}
+            {{- $fichier := .logo -}}
 
             {{ if $fichier }}
               {{ $imageurl := printf "/%s/%s" $dir $fichier }}
               <div class="sponsor-logo sponsor-logo-{{ $niveau }}">
-                  <img src="{{ .image }}" alt="{{ .name }}" alt="Logo de {{ $name }}" />
+                <a href="{{ $url }}" target="_blank" rel="noopener">
+                  <img src="{{ $imageurl | relURL }}" alt="Logo de {{ $name }}" />
                 </a>
               </div>
             {{ else }}
