@@ -17,8 +17,7 @@
             {{- $url := .url -}}
             {{- $niveau := .niveau -}}
 
-            
-            {{ $fichiers := readDir (print "/static" $dir) }}
+            {{ $fichiers := readDir $dir }}
             {{ $fichier := "" }}
 
             {{ range $fichiers }}
@@ -28,16 +27,10 @@
             {{ end }}
 
             {{ if $fichier }}
-              {{ $ext := lower (delimit (last 1 (split $fichier ".")) "") }}
               {{ $imageurl := printf "%s/%s" $dir $fichier }}
               <div class="sponsor-logo sponsor-logo-{{ $niveau }}">
                 <a href="{{ $url }}" target="_blank" rel="noopener">
-                  {{ if eq $ext "svg" }}
-                    <img src="{{ $imageurl | relURL }}" alt="Logo de {{ $name }}" />
-                  {{ else }}
-                    {{ $image := resources.Get $imageurl }}
-                    <img src="{{ ($image.Fit "300x150 q80").RelPermalink }}" alt="Logo de {{ $name }}" />
-                  {{ end }}
+                  <img src="{{ $imageurl | relURL }}" alt="Logo de {{ $name }}" />
                 </a>
               </div>
             {{ else }}
