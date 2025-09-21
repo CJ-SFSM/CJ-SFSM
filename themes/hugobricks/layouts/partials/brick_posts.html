@@ -14,32 +14,62 @@
   <div class="container">
     <ul class="contentitems grid posts" data-pagesize="{{ page.Site.Data.settings.page_size }}">
       {{ range $i, $p := $posts }}
+
+        {{- /* ===================== DEBUG – Début du bloc post ===================== */ -}}
+        <!-- HUGO-DEBUG POST
+          path={{ $p.File.Path }}
+          section={{ $p.Section }}
+          title={{ $p.Title }}
+          rawParamImage={{ with $p.Params.image }}{{ . }}{{ else }}<none>{{ end }}
+          resourcesCount={{ len $p.Resources }}
+        -->
+        {{- /* ===================== DEBUG – Fin entête ============================= */ -}}
+
         {{- $postimage := "" -}}
         {{- with $p.Params.image -}}
           {{- $img := . -}}
+
           {{- if or (hasPrefix $img "http://") (hasPrefix $img "https://") -}}
             {{- $postimage = $img -}}
+            <!-- HUGO-DEBUG image: external URL detected → {{ $postimage }} -->
           {{- else -}}
-            {{- /* Autoriser "static/..." dans le front-matter : on l’enlève pour l’URL publique */ -}}
+            {{- /* Normalise : retire "static/" et "/" initiaux pour construire une URL publique */ -}}
             {{- $img = strings.TrimPrefix $img "static/" -}}
+            {{- $img = strings.TrimPrefix $img "/" -}}
+            <!-- HUGO-DEBUG image: normalisedParam={{ $img }} -->
 
-            {{- /* Priorité au page-bundle : si l’image est à côté du .md, on utilise la pipeline */ -}}
-            {{- with $p.Resources.GetMatch $img -}}
-              {{- $postimage = (.Fill `600x300 jpg Smart q50`).RelPermalink -}}
+            {{- /* 1) Tentative page-bundle (fichier dans le même dossier que le .md) */ -}}
+            {{- $matched := $p.Resources.GetMatch $img -}}
+            {{- if $matched -}}
+              {{- $postimage = ($matched.Fill `600x300 jpg Smart q50`).RelPermalink -}}
+              <!-- HUGO-DEBUG image: found in page bundle → {{ $matched.RelPermalink }} (transformed={{ $postimage }}) -->
             {{- else -}}
-              {{- /* Sinon : image servie depuis /static → URL publique absolue */ -}}
-              {{- $clean := strings.TrimPrefix "/" $img -}}
-              {{- $postimage = (print "/" $clean) -}}
+              <!-- HUGO-DEBUG image: NOT found in page bundle. Will try static. -->
+              {{- /* 2) Tentative static/… */ -}}
+              {{- $staticCandidate := (print "static/" $img) -}}
+              {{- if (fileExists $staticCandidate) -}}
+                {{- $postimage = (print "/" $img) -}}
+                <!-- HUGO-DEBUG image: found in static → file={{ $staticCandidate }} url={{ $postimage }} -->
+              {{- else -}}
+                <!-- HUGO-DEBUG image: NOT found in static. checked={{ $staticCandidate }} -->
+              {{- end -}}
             {{- end -}}
           {{- end -}}
+        {{- else -}}
+          <!-- HUGO-DEBUG image: no "image" param in front-matter -->
         {{- end -}}
 
-        {{- /* Fallback configurable si aucune image */ -}}
+        {{- /* 3) Fallback configurable via data/settings.yaml → default_post_image */ -}}
         {{- if not $postimage -}}
           {{- with page.Site.Data.settings.default_post_image -}}
             {{- $postimage = (. | relURL) -}}
+            <!-- HUGO-DEBUG image: fallback used → {{ $postimage }} -->
+          {{- else -}}
+            <!-- HUGO-DEBUG image: NO fallback configured (data/settings.yaml: default_post_image) -->
           {{- end -}}
         {{- end -}}
+
+        <!-- HUGO-DEBUG image: FINAL resolved src="{{ if $postimage }}{{ $postimage }}{{ else }}<empty>{{ end }}" -->
 
         <li class="item{{ range $p.Params.tags }} tag_{{ . }}{{ end }}">
           {{- if $postimage -}}
@@ -49,6 +79,8 @@
                      style="cursor:pointer;" onclick="document.location.href='{{ $p.RelPermalink }}';" />
               </div>
             </a>
+          {{- else -}}
+            <!-- HUGO-DEBUG image: nothing to render (no <img>) -->
           {{- end -}}
 
           <h3>{{ $p.Title | safeHTML }}</h3>
@@ -67,6 +99,9 @@
             <p><a href="{{ $p.RelPermalink }}" class="button ghost smaller">{{ i18n "En savoir plus" }}</a></p>
           </div>
         </li>
+
+        {{- /* ===================== DEBUG – Fin du bloc post ======================= */ -}}
+
       {{ end }}
       <li class="placeholder"></li>
       <li class="placeholder"></li>
