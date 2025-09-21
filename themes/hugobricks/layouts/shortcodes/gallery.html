@@ -30,7 +30,7 @@
               {{ $imageurl := printf "/%s/%s" $dir $fichier }}
               <div class="sponsor-logo sponsor-logo-{{ $niveau }}">
                 <a href="{{ $url }}" target="_blank" rel="noopener">
-                  <img src="{{ $imageurl | relURL }}" alt="Logo de {{ $name }}" />
+                  <img src="{{ .image }}" alt="{{ .name }}" alt="Logo de {{ $name }}" />
                 </a>
               </div>
             {{ else }}
