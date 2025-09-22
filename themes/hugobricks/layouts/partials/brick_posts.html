@@ -1,4 +1,3 @@
-
 {{- $inner := . -}}
 {{- if or (eq $inner "") (eq $inner nil) -}}
     {{- with page.Site.GetPage "bricks/posts.md" -}}
@@ -21,10 +20,25 @@
         <ul class="contentitems grid posts" data-pagesize="{{ page.Site.Data.settings.page_size }}">
             {{ range $index,$post := $posts }}
                 <li class="item{{ range .Params.tags }} tag_{{ . }}{{ end }}">
-                        {{- if (resources.GetMatch .Params.image) -}}
-                            {{- $postimage := ((resources.GetMatch .Params.image).Fill `1200x600 jpg Smart q50`).RelPermalink -}}
-                            {{- if $postimage -}}<a href="{{ .RelPermalink }}"><div class="img"><img data-src="{{ $postimage }}" alt="{{ .Title }}" style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" /></div></a>{{- end -}}
+                        {{- /* === Seule adaptation : images dans ./static/actualites/ === */ -}}
+                        {{- $postimage := "" -}}
+                        {{- with .Params.image -}}
+                            {{- $img := . -}}
+                            {{- /* normaliser ce que l’auteur met en front-matter :
+                                   "IMSC_2026.png" | "actualites/IMSC_2026.png" | "static/actualites/IMSC_2026.png" */ -}}
+                            {{- $img = strings.TrimPrefix $img "static/" -}}
+                            {{- $img = strings.TrimPrefix $img "/" -}}
+                            {{- if not (hasPrefix $img "actualites/") -}}
+                                {{- $img = print "actualites/" $img -}}
+                            {{- end -}}
+                            {{- /* ne rendre l’image que si le fichier existe réellement */ -}}
+                            {{- if fileExists (print "static/" $img) -}}
+                                {{- $postimage = (print "/" $img) -}}
+                            {{- end -}}
                         {{- end -}}
+                        {{- /* === Fin de l’adaptation — le reste est inchangé === */ -}}
+
+                        {{- if $postimage -}}<a href="{{ .RelPermalink }}"><div class="img"><img data-src="{{ $postimage }}" alt="{{ .Title }}" style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" /></div></a>{{- end -}}
                         <h3>{{ .Title | safeHTML }}</h3>
                         {{ if .Params.date }}<div class="meta">
                             <div>
@@ -46,5 +60,3 @@
         <script src="/js/filter.js" charset="utf-8"></script>
     </div>
 </section>
-
-
