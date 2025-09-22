@@ -21,34 +21,37 @@
             {{ range $index,$post := $posts }}
                 <li class="item{{ range .Params.tags }} tag_{{ . }}{{ end }}">
 
-                        {{- /* ======== Seule adaptation : VIGNETTE via data/actualite_images.yaml (static/actualite/) ======== */ -}}
+                        {{- /* === VIGNETTE via YAML (static/actualite/) — remplace l’ancien bloc image === */ -}}
                         {{- $postimage := "" -}}
-                        {{- $slug := $post.File.TranslationBaseName | lower -}}
-                        {{- $map  := site.Data.actualite_images.images -}}
-                        {{- with index $map $slug -}}
+                        {{- $slug := .File.TranslationBaseName | lower -}}
+                        {{- with site.Data.actualite_images.images -}}
+                        {{- with index . $slug -}}
                             {{- $f := . | string -}}
-                            {{- /* On accepte "image.jpg", "actualite/image.jpg" ou "static/actualite/image.jpg" dans le YAML */ -}}
+                            {{- /* Nettoyage : on enlève eventuels préfixes et slashes finaux */ -}}
                             {{- $f = strings.TrimPrefix $f "static/" -}}
-                            {{- $f = strings.TrimPrefix $f "/" -}}
-                            {{- if not (hasPrefix $f "actualite/") -}}
-                                {{- $f = print "actualite/" $f -}}
+                            {{- $f = strings.TrimPrefix $f "actualite/" -}}
+                            {{- $f = strings.Trim $f "/" -}}
+                            {{- /* Exiger une extension → évite de traiter un dossier comme un fichier */ -}}
+                            {{- $ext := lower (path.Ext $f) -}}
+                            {{- if and (ne $f "") (ne $ext "") -}}
+                            {{- $rel := print "actualite/" $f -}}
+                            {{- if fileExists (print "static/" $rel) -}}
+                                {{- $postimage = ($rel | relURL) -}}
                             {{- end -}}
-                            {{- /* Ne rendre l'image que si le fichier existe vraiment dans static/ */ -}}
-                            {{- if fileExists (print "static/" $f) -}}
-                                {{- /* relURL gère correctement un éventuel sous-chemin (ex. /CJ-SFSM/) */ -}}
-                                {{- $postimage = ($f | relURL) -}}
                             {{- end -}}
+                        {{- end -}}
                         {{- end -}}
 
                         {{- if $postimage -}}
-                            <a href="{{ .RelPermalink }}">
-                                <div class="img">
-                                    <img src="{{ $postimage }}" data-src="{{ $postimage }}" alt="{{ .Title }}" loading="lazy" decoding="async"
-                                         style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" />
-                                </div>
-                            </a>
+                        <a href="{{ .RelPermalink }}">
+                            <div class="img">
+                            <img src="{{ $postimage }}" data-src="{{ $postimage }}" alt="{{ .Title }}" loading="lazy" decoding="async"
+                                style="cursor:pointer;" onclick="document.location.href='{{ .RelPermalink }}';" />
+                            </div>
+                        </a>
                         {{- end -}}
-                        {{- /* ======== Fin de l’adaptation — tout le reste ci-dessous est inchangé ======== */ -}}
+                        {{- /* === FIN DU BLOC VIGNETTE === */ -}}
+
 
                         <h3>{{ .Title | safeHTML }}</h3>
                         {{ if .Params.date }}<div class="meta">
