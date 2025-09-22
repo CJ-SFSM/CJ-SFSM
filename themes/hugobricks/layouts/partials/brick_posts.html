@@ -1,4 +1,3 @@
-
 {{- $inner := . -}}
 {{- if or (eq $inner "") (eq $inner nil) -}}
     {{- with page.Site.GetPage "bricks/posts.md" -}}
@@ -11,25 +10,51 @@
         {{- markdownify $inner -}}
     </div>{{ end }}
     <div class="container">
-        <!--<div class="filter">
+        <div class="filter">
             <select id="filter" class="multiselecttags numbers_{{ page.Site.Data.settings.filter_has_numbers }}" multiple autocomplete="off" title="{{ i18n "Filter tags" }}">
                 {{ range $name, $taxonomy := page.Site.Taxonomies.tags }}
                     <option value="{{ $name }}">{{ $name }}</option>
                 {{ end }}
             </select>
-        </div>-->
+        </div>
         <ul class="contentitems grid posts" data-pagesize="{{ page.Site.Data.settings.page_size }}">
             {{ range $index,$post := $posts }}
                 <li class="item{{ range .Params.tags }} tag_{{ . }}{{ end }}">
-                        {{- if (resources.GetMatch .Params.image) -}}
-                            {{- $postimage := ((resources.GetMatch .Params.image).Fill `1200x600 jpg Smart q50`).RelPermalink -}}
-                            {{- if $postimage -}}<a href="{{ .RelPermalink }}"><div class="img"><img data-src="{{ $postimage }}" alt="{{ .Title }}" style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" /></div></a>{{- end -}}
+
+                        {{- /* ======== Seule adaptation : VIGNETTE via data/actualite_images.yaml (static/actualite/) ======== */ -}}
+                        {{- $postimage := "" -}}
+                        {{- $slug := $post.File.TranslationBaseName | lower -}}
+                        {{- $map  := site.Data.actualite_images.images -}}
+                        {{- with index $map $slug -}}
+                            {{- $f := . | string -}}
+                            {{- /* On accepte "image.jpg", "actualite/image.jpg" ou "static/actualite/image.jpg" dans le YAML */ -}}
+                            {{- $f = strings.TrimPrefix $f "static/" -}}
+                            {{- $f = strings.TrimPrefix $f "/" -}}
+                            {{- if not (hasPrefix $f "actualite/") -}}
+                                {{- $f = print "actualite/" $f -}}
+                            {{- end -}}
+                            {{- /* Ne rendre l'image que si le fichier existe vraiment dans static/ */ -}}
+                            {{- if fileExists (print "static/" $f) -}}
+                                {{- /* relURL gère correctement un éventuel sous-chemin (ex. /CJ-SFSM/) */ -}}
+                                {{- $postimage = ($f | relURL) -}}
+                            {{- end -}}
                         {{- end -}}
+
+                        {{- if $postimage -}}
+                            <a href="{{ .RelPermalink }}">
+                                <div class="img">
+                                    <img src="{{ $postimage }}" data-src="{{ $postimage }}" alt="{{ .Title }}" loading="lazy" decoding="async"
+                                         style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" />
+                                </div>
+                            </a>
+                        {{- end -}}
+                        {{- /* ======== Fin de l’adaptation — tout le reste ci-dessous est inchangé ======== */ -}}
+
                         <h3>{{ .Title | safeHTML }}</h3>
                         {{ if .Params.date }}<div class="meta">
                             <div>
-                                <img src="/icon/calendar_month.svg"class="black_2_textDark" alt="" />
-                                {{ .Date | time.Format ":date_medium"}}
+                                <img src="/icon/calendar_month.svg" class="black_2_textDark" alt="" />
+                                {{ .Date | time.Format ":date_medium" }}
                             </div>
                         </div>
                         {{ end }}
@@ -46,4 +71,3 @@
         <script src="/js/filter.js" charset="utf-8"></script>
     </div>
 </section>
-

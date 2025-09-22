@@ -1,0 +1,5 @@
+# data/actualite_images.yaml
+images:
+  survey_imsc: survey.png
+  cjsm_2026: Location_RCJSM_2026.png
+  # ajoutez autant de lignes que nécessaire
