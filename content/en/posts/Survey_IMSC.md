@@ -1,6 +1,5 @@
 ---
 title: IMSC 2026
-image: /actualite/survey.png
 date: 2025-09-17
 tags: 
   - Evenement
