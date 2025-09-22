@@ -19,29 +19,40 @@
             </select>
         </div>-->
         <ul class="contentitems grid posts" data-pagesize="{{ page.Site.Data.settings.page_size }}">
-            {{ range $index,$post := $posts }}
-                <li class="item{{ range .Params.tags }} tag_{{ . }}{{ end }}">
-                        {{- if (resources.GetMatch .Params.image) -}}
-                            {{- $postimage := ((resources.GetMatch .Params.image).Fill `1200x600 jpg Smart q50`).RelPermalink -}}
-                            {{- if $postimage -}}<a href="{{ .RelPermalink }}"><div class="img"><img data-src="{{ $postimage }}" alt="{{ .Title }}" style="cursor: pointer;" onclick="document.location.href='{{ .RelPermalink }}';" /></div></a>{{- end -}}
-                        {{- end -}}
-                        <h3>{{ .Title | safeHTML }}</h3>
-                        {{ if .Params.date }}<div class="meta">
-                            <div>
-                                <img src="/icon/calendar_month.svg"class="black_2_textDark" alt="" />
-                                {{ .Date | time.Format ":date_medium"}}
-                            </div>
-                        </div>
-                        {{ end }}
-                        <div class="summary">
-                            <p>{{ substr (.Summary | plainify) 0 190 | safeHTML }}...</p>
-                            <p><a href="{{ .RelPermalink }}" class="button ghost smaller">{{ i18n "En savoir plus" }}</a></p>
-                        </div>
-                </li>
+        {{ range $index,$post := $posts }}
+            <li class="item{{ range .Params.tags }} tag_{{ . }}{{ end }}">
+            
+            {{ with .Params.image }}
+                <a href="{{ $.RelPermalink }}">
+                <div class="img">
+                    <img src="/{{ . }}" alt="{{ $.Title }}" 
+                        style="cursor: pointer;" 
+                        onclick="document.location.href='{{ $.RelPermalink }}';" />
+                </div>
+                </a>
             {{ end }}
-            <li class="placeholder"></li>
-            <li class="placeholder"></li>
+
+            <h3>{{ .Title | safeHTML }}</h3>
+            
+            {{ if .Params.date }}
+                <div class="meta">
+                <div>
+                    <img src="/icon/calendar_month.svg" class="black_2_textDark" alt="" />
+                    {{ .Date | time.Format ":date_medium"}}
+                </div>
+                </div>
+            {{ end }}
+
+            <div class="summary">
+                <p>{{ substr (.Summary | plainify) 0 190 | safeHTML }}...</p>
+                <p><a href="{{ .RelPermalink }}" class="button ghost smaller">{{ i18n "En savoir plus" }}</a></p>
+            </div>
+            </li>
+        {{ end }}
+        <li class="placeholder"></li>
+        <li class="placeholder"></li>
         </ul>
+
         <a class="button secondary ghost smaller" id="loadmoreposts" onclick="loadMorePosts();">{{ i18n "Plus d'articles" }}...</a>
         <script src="/js/filter.js" charset="utf-8"></script>
     </div>
